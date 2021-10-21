@@ -3,7 +3,7 @@
 		<image class="logo" src="/static/logo.png"></image>
 		<view class="text-area">
 			<text class="title">{{title}}</text>
-			<button open-type="getUserInfo" @getuserinfo="login">登录</button>
+			<button open-type="getUserInfo" @getuserinfo="getUserInfo">登录</button>
 		</view>
 	</view>
 </template>
@@ -12,37 +12,43 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				title: '微信登录'
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-			login() {
-				// uni.showModal({
-				// 	title: '温馨提示',
-				// 	content: '亲，授权微信登录后才能正常使用小程序功能',
-				// 	success(res) {
-				// 		if (res.confirm) {
-
-				// 		}
-				// 	}
-				// })
-
-							uni.login({
-								provider: 'weixin',
-								success: function(loginRes) {
-									console.log('loginRes.authResult',loginRes);
-								}
-							});
+			getUserInfo() {
+				uni.showModal({
+					title: '温馨提示',
+					content: '亲，授权微信登录后才能正常使用小程序功能',
+					success(res) {
+						if (res.confirm) {
 							uni.getUserProfile({
 								desc: "注册用户信息使用",
 								lang: "zh_CN",
 								success:(res) => {
 									console.log('res', res)
+									uni.login({
+										provider: 'weixin',
+										success: function(loginRes) {
+											console.log('loginRes.authResult',loginRes);
+										}
+									});
 								}
 							})
+						} else {
+							uni.showToast({
+								title: '您取消了授权',
+								duration: 2000
+							});
+						}
+					}
+				})
+
+
+
 				
 			}
 		}
