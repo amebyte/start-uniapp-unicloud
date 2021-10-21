@@ -150,36 +150,42 @@ var _default =
 {
   data: function data() {
     return {
-      title: 'Hello' };
+      title: '微信登录' };
 
   },
   onLoad: function onLoad() {
 
   },
   methods: {
-    login: function login() {
-      // uni.showModal({
-      // 	title: '温馨提示',
-      // 	content: '亲，授权微信登录后才能正常使用小程序功能',
-      // 	success(res) {
-      // 		if (res.confirm) {
-
-      // 		}
-      // 	}
-      // })
-
-      uni.login({
-        provider: 'weixin',
-        success: function success(loginRes) {
-          console.log('loginRes.authResult', loginRes);
-        } });
-
-      uni.getUserProfile({
-        desc: "注册用户信息使用",
-        lang: "zh_CN",
+    getUserInfo: function getUserInfo() {
+      uni.showModal({
+        title: '温馨提示',
+        content: '亲，授权微信登录后才能正常使用小程序功能',
         success: function success(res) {
-          console.log('res', res);
+          if (res.confirm) {
+            uni.getUserProfile({
+              desc: "注册用户信息使用",
+              lang: "zh_CN",
+              success: function success(res) {
+                console.log('res', res);
+                uni.login({
+                  provider: 'weixin',
+                  success: function success(loginRes) {
+                    console.log('loginRes.authResult', loginRes);
+                  } });
+
+              } });
+
+          } else {
+            uni.showToast({
+              title: '您取消了授权',
+              duration: 2000 });
+
+          }
         } });
+
+
+
 
 
     } } };exports.default = _default;

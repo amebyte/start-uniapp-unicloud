@@ -20,7 +20,15 @@
 
 按uniCloud官网建立一个uniCloud项目【[传送门](https://uniapp.dcloud.io/uniCloud/quickstart?id=%e5%88%9b%e5%bb%baunicloud%e9%a1%b9%e7%9b%ae)】
 
-### 登录代码
+### 小程序登录流程
+
+ ![](./md/api-login.2fcc9f35.jpg)
+
+[来源小程序开发文档](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html)
+
+
+
+
 
 ```javascript
 <button open-type="getUserInfo" @getuserinfo="getUserInfo">登录</button>
@@ -67,8 +75,13 @@ methods: {
 }
 ```
 
+[wx.login(Object object)](https://developers.weixin.qq.com/miniprogram/dev/api/open-api/login/wx.login.html)
 
+用户登录凭证（有效期五分钟）。开发者需要在开发者服务器后台调用 [auth.code2Session](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html)，使用 code 换取 openid、unionid、session_key 等信息 
 
+[wx.getUserProfile(Object object)](https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/wx.getUserProfile.html)
+
+[uniCloud云函数](https://uniapp.dcloud.io/uniCloud/cf-functions?id=api%e5%88%97%e8%a1%a8)
 
 
 
