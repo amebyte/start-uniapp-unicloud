@@ -34,6 +34,16 @@
 										provider: 'weixin',
 										success: function(loginRes) {
 											console.log('loginRes.authResult',loginRes);
+											uniCloud.callFunction({
+												name: 'user',
+												data: { 
+													code: loginRes.code,
+													avatarUrl: res.userInfo.avatarUrl,
+													gender: res.userInfo.gender,
+													nickName: res.userInfo.nickName
+												}
+											  })
+											  .then(res => {});
 										}
 									});
 								}
@@ -46,10 +56,6 @@
 						}
 					}
 				})
-
-
-
-				
 			}
 		}
 	}
