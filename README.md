@@ -168,6 +168,8 @@ uniCloud.callFunction({
 });
 ```
 
+### 具体实现
+
 我们选择 promise方式调用云函数
 
  ![](./md/clientCallFuntion1.png)
