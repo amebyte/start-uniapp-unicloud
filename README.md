@@ -201,7 +201,7 @@ uniCloud.callFunction({
 ![](./md/auth.code2Session.png)
 
 我们看到我们要访问微信接口服务器需要在云函数中通过http请求，uniCloud也提供了相关http工具函数：[访问HTTP服务](https://uniapp.dcloud.io/uniCloud/cf-functions?id=httpclient)
-
+实现云函数user相关逻辑
 ```javascript
 'use strict';
 const appid = ''
@@ -227,4 +227,60 @@ exports.main = async (event, context) => {
 };
 ```
 
+我们通过uniCloud提供的http函数获取到了openid
 
+ ![](./md/user-res.png)
+
+接来下我们要把openid和相关数据存储到云数据库中
+这个时候我们就又要回到uniCloud的开发文档中查询云数据库操作的相关文档了
+[云函数操作云数据库](https://uniapp.dcloud.io/uniCloud/cf-database)
+
+ ![](./md/uniCloud.data.use.png)
+
+最终云函数的实现
+
+```javascript
+'use strict';
+const appid = 'wx5478d0fce9c1dc**'
+const secret = '445cf16777099d73d9a282c37cf505**'
+const db = uniCloud.database();
+const user = db.collection('user');
+exports.main = async (event, context) => {
+	//event为客户端上传的参数
+	console.log('event : ', event)
+	const {
+		code,
+		avatarUrl,
+		gender,
+		nickName
+	} = event
+	const URL = `https://api.weixin.qq.com/sns/jscode2session?appid=${appid}&secret=${secret}&js_code=${code}&grant_type=authorization_code`
+	const requestOptions = {
+		method: 'GET',
+		dataType: 'json'
+	}
+	const res = await uniCloud.httpclient.request(URL,requestOptions)
+	const { data: { openid } } = res
+	const countRes = await user.where({openid}).count()
+	console.log('count', count)
+	if(countRes.total !== 1 ) {
+		user.add({
+			openid
+			avatarUrl,
+			gender,
+			nickName
+		})
+	}
+	//返回数据给客户端
+	return {
+		openid
+		avatarUrl,
+		gender,
+		nickName
+	}
+};
+```
+
+整个项目我已经上传到了github上了
+
+[github地址传送门](https://github.com/amebyte/start-uniapp-unicloud)

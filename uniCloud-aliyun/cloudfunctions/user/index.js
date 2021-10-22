@@ -1,6 +1,8 @@
 'use strict';
-const appid = ''
-const secret = ''
+const appid = 'wx5478d0fce9c1dc63'
+const secret = '445cf16777099d73d9a282c37cf5055a'
+const db = uniCloud.database();
+const user = db.collection('user');
 exports.main = async (event, context) => {
 	//event为客户端上传的参数
 	console.log('event : ', event)
@@ -16,7 +18,22 @@ exports.main = async (event, context) => {
 		dataType: 'json'
 	}
 	const res = await uniCloud.httpclient.request(URL,requestOptions)
-	console.log('res', res)
+	const { data: { openid } } = res
+	const countRes = await user.where({openid}).count()
+	console.log('count', count)
+	if(countRes.total !== 1 ) {
+		user.add({
+			openid
+			avatarUrl,
+			gender,
+			nickName
+		})
+	}
 	//返回数据给客户端
-	return event
+	return {
+		openid
+		avatarUrl,
+		gender,
+		nickName
+	}
 };
