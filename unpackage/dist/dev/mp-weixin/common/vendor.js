@@ -8528,9 +8528,9 @@ function walkJsonObj(jsonObj, walk) {
 
 /***/ }),
 /* 5 */
-/*!***********************************************************!*\
-  !*** L:/work2020/uniapp/start-uniapp-unicloud/pages.json ***!
-  \***********************************************************/
+/*!*******************************************************!*\
+  !*** E:/test/github/start-uniapp-unicloud/pages.json ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
