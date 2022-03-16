@@ -23,7 +23,7 @@ exports.main = async (event, context) => {
 	const countRes = await user.where({openid}).count()
 	console.log('count', count)
 	if(countRes.total !== 1 ) {
-		// 往user数据表里面添加数据
+		// 往user数据表里面添加数据,添加完数据之后,云数据库的user表里面就有相关的数据了
 		user.add({
 			openid
 			avatarUrl,
