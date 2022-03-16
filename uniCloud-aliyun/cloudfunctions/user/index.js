@@ -2,6 +2,7 @@
 const appid = 'wx5478d0fce9c1dc63'
 const secret = '445cf16777099d73d9a282c37cf5055a'
 const db = uniCloud.database();
+// 创建user数据表实例
 const user = db.collection('user');
 exports.main = async (event, context) => {
 	//event为客户端上传的参数
@@ -22,6 +23,7 @@ exports.main = async (event, context) => {
 	const countRes = await user.where({openid}).count()
 	console.log('count', count)
 	if(countRes.total !== 1 ) {
+		// 往user数据表里面添加数据
 		user.add({
 			openid
 			avatarUrl,
